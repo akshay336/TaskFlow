@@ -1,0 +1,36 @@
+<div class="form-page-layout">
+  <!-- Navigation Header / Breadcrumbs -->
+  <div class="page-top-nav">
+    <a routerLink="/tasks" class="back-link" id="create-back-link">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="19" y1="12" x2="5" y2="12"></line>
+        <polyline points="12 19 5 12 12 5"></polyline>
+      </svg>
+      <span>Back to Tasks</span>
+    </a>
+  </div>
+
+  <!-- Main Card -->
+  <div class="form-card" id="task-create-card">
+    <div class="card-header">
+      <div class="header-icon-box">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="12" y1="5" x2="12" y2="19"></line>
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+        </svg>
+      </div>
+      <div class="header-text">
+        <h1 class="card-title">Create New Task</h1>
+        <p class="card-subtitle">Define task details, assign priority, and set due dates for execution.</p>
+      </div>
+    </div>
+
+    <!-- Reusable Task Form -->
+    <app-task-form
+      [task]="null"
+      [isSubmitting]="isSubmitting()"
+      (formSubmit)="handleFormSubmit($event)"
+      (formCancel)="handleCancel()">
+    </app-task-form>
+  </div>
+</div>

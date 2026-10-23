@@ -1,0 +1,27 @@
+@if (mode() === 'spinner') {
+  <div class="spinner-wrapper" role="status" aria-live="polite">
+    <div class="spinner-ring"></div>
+    <span class="spinner-message">{{ message() }}</span>
+  </div>
+} @else {
+  <div class="skeleton-grid" aria-hidden="true">
+    @for (i of [1, 2, 3, 4]; track i) {
+      <div class="skeleton-card">
+        <div class="skeleton-header">
+          <div class="skeleton-pill"></div>
+          <div class="skeleton-pill sm"></div>
+        </div>
+        <div class="skeleton-line title"></div>
+        <div class="skeleton-line desc"></div>
+        <div class="skeleton-line desc short"></div>
+        <div class="skeleton-footer">
+          <div class="skeleton-line date"></div>
+          <div class="skeleton-actions">
+            <div class="skeleton-circle"></div>
+            <div class="skeleton-circle"></div>
+          </div>
+        </div>
+      </div>
+    }
+  </div>
+}

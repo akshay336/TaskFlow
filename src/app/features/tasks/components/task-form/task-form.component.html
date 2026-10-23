@@ -1,0 +1,158 @@
+<form [formGroup]="taskForm" (ngSubmit)="onSubmit()" class="task-form" novalidate id="task-reactive-form">
+  <!-- Title Field -->
+  <div class="form-group">
+    <label for="task-form-title">
+      Title <span class="required-star" aria-hidden="true">*</span>
+    </label>
+    <input
+      type="text"
+      id="task-form-title"
+      formControlName="title"
+      class="form-control"
+      [class.is-invalid]="isFieldInvalid('title')"
+      placeholder="e.g. Implement user authentication flow"
+      aria-required="true"
+      [attr.aria-invalid]="isFieldInvalid('title')"
+      aria-describedby="title-error" />
+
+    @if (isFieldInvalid('title')) {
+      <div class="error-message" id="title-error" role="alert">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="12" y1="8" x2="12" y2="12"></line>
+          <line x1="12" y1="16" x2="12.01" y2="16"></line>
+        </svg>
+        @if (taskForm.get('title')?.hasError('required')) {
+          <span>Title is required.</span>
+        } @else if (taskForm.get('title')?.hasError('minlength')) {
+          <span>Title must contain at least 3 characters.</span>
+        }
+      </div>
+    }
+  </div>
+
+  <!-- Description Field -->
+  <div class="form-group">
+    <label for="task-form-description">
+      Description <span class="field-hint">(optional)</span>
+    </label>
+    <textarea
+      id="task-form-description"
+      formControlName="description"
+      class="form-control"
+      rows="3"
+      placeholder="Provide context, acceptance criteria, or relevant links..."></textarea>
+  </div>
+
+  <!-- Row: Status & Priority -->
+  <div class="form-row">
+    <!-- Status Field -->
+    <div class="form-group flex-1">
+      <label for="task-form-status">
+        Status <span class="required-star" aria-hidden="true">*</span>
+      </label>
+      <select
+        id="task-form-status"
+        formControlName="status"
+        class="form-control"
+        [class.is-invalid]="isFieldInvalid('status')"
+        aria-required="true">
+        @for (opt of statusOptions; track opt.value) {
+          <option [value]="opt.value">{{ opt.label }}</option>
+        }
+      </select>
+
+      @if (isFieldInvalid('status')) {
+        <div class="error-message" role="alert">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="8" x2="12" y2="12"></line>
+            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+          </svg>
+          <span>Status is required.</span>
+        </div>
+      }
+    </div>
+
+    <!-- Priority Field -->
+    <div class="form-group flex-1">
+      <label for="task-form-priority">
+        Priority <span class="required-star" aria-hidden="true">*</span>
+      </label>
+      <select
+        id="task-form-priority"
+        formControlName="priority"
+        class="form-control"
+        [class.is-invalid]="isFieldInvalid('priority')"
+        aria-required="true">
+        @for (opt of priorityOptions; track opt.value) {
+          <option [value]="opt.value">{{ opt.label }}</option>
+        }
+      </select>
+
+      @if (isFieldInvalid('priority')) {
+        <div class="error-message" role="alert">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="8" x2="12" y2="12"></line>
+            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+          </svg>
+          <span>Priority is required.</span>
+        </div>
+      }
+    </div>
+  </div>
+
+  <!-- Due Date Field -->
+  <div class="form-group">
+    <label for="task-form-due-date">
+      Due Date <span class="required-star" aria-hidden="true">*</span>
+    </label>
+    <input
+      type="date"
+      id="task-form-due-date"
+      formControlName="dueDate"
+      class="form-control date-input"
+      [class.is-invalid]="isFieldInvalid('dueDate')"
+      aria-required="true"
+      [attr.aria-invalid]="isFieldInvalid('dueDate')" />
+
+    @if (isFieldInvalid('dueDate')) {
+      <div class="error-message" role="alert">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="12" y1="8" x2="12" y2="12"></line>
+          <line x1="12" y1="16" x2="12.01" y2="16"></line>
+        </svg>
+        <span>Due date is required.</span>
+      </div>
+    }
+  </div>
+
+  <!-- Form Action Buttons -->
+  <div class="form-actions">
+    <button
+      type="button"
+      class="btn btn-secondary"
+      (click)="onCancel()"
+      [disabled]="isSubmitting()"
+      id="task-form-cancel-btn">
+      Cancel
+    </button>
+    <button
+      type="submit"
+      class="btn btn-primary"
+      [disabled]="isSubmitting()"
+      id="task-form-submit-btn">
+      @if (isSubmitting()) {
+        <span class="btn-spinner"></span>
+        <span>Saving Task...</span>
+      } @else {
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="20 6 9 17 4 12"></polyline>
+        </svg>
+        <span>{{ task() ? 'Update Task' : 'Create Task' }}</span>
+      }
+    </button>
+  </div>
+</form>

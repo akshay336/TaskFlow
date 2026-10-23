@@ -1,0 +1,128 @@
+.spinner-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 3rem 1rem;
+}
+
+.spinner-ring {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 2.5px solid var(--border-color);
+  border-top-color: var(--primary);
+  animation: spinRing 0.7s linear infinite;
+}
+
+.spinner-message {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-muted);
+}
+
+@keyframes spinRing {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Skeleton loader */
+.skeleton-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1rem;
+  width: 100%;
+}
+
+.skeleton-card {
+  background: #ffffff;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.875rem;
+  position: relative;
+  overflow: hidden;
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    transform: translateX(-100%);
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(0, 0, 0, 0.03),
+      transparent
+    );
+    animation: shimmer 1.5s infinite;
+  }
+}
+
+.skeleton-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.skeleton-pill {
+  width: 70px;
+  height: 20px;
+  background: var(--bg-subtle);
+  border-radius: var(--radius-sm);
+
+  &.sm {
+    width: 50px;
+  }
+}
+
+.skeleton-line {
+  background: var(--bg-subtle);
+  border-radius: var(--radius-sm);
+
+  &.title {
+    height: 18px;
+    width: 75%;
+  }
+
+  &.desc {
+    height: 14px;
+    width: 100%;
+
+    &.short {
+      width: 60%;
+    }
+  }
+
+  &.date {
+    height: 14px;
+    width: 80px;
+  }
+}
+
+.skeleton-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 0.5rem;
+}
+
+.skeleton-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.skeleton-circle {
+  width: 24px;
+  height: 24px;
+  border-radius: var(--radius-sm);
+  background: var(--bg-subtle);
+}
+
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}

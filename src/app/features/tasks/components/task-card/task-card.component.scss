@@ -1,0 +1,171 @@
+.task-card {
+  background: #ffffff;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 1.125rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.875rem;
+  transition: border-color var(--transition), box-shadow var(--transition);
+  position: relative;
+  box-shadow: var(--shadow-xs);
+
+  &:hover {
+    border-color: var(--border-strong);
+    box-shadow: var(--shadow-sm);
+  }
+
+  &.is-overdue {
+    border-left: 3px solid var(--danger-solid);
+  }
+
+  &.is-completed {
+    background: #fafafa;
+    border-color: #e5e7eb;
+
+    .task-title {
+      text-decoration: line-through;
+      color: var(--text-muted);
+    }
+
+    .task-description {
+      color: var(--text-light);
+    }
+  }
+}
+
+.card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.badges-row {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  flex-wrap: wrap;
+}
+
+.status-indicator {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.complete-toggle-btn {
+  width: 22px;
+  height: 22px;
+  border-radius: var(--radius-sm);
+  background: #ffffff;
+  border: 1px solid var(--border-strong);
+  color: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all var(--transition);
+  flex-shrink: 0;
+
+  &:hover {
+    border-color: #16a34a;
+    color: rgba(22, 163, 74, 0.4);
+  }
+
+  &.checked {
+    background: #16a34a;
+    border-color: #16a34a;
+    color: #ffffff;
+  }
+}
+
+.card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+  flex: 1;
+}
+
+.task-title {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  line-height: 1.35;
+}
+
+.task-description {
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+  line-height: 1.45;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+
+  &.empty-desc {
+    color: var(--text-light);
+    font-style: italic;
+  }
+}
+
+.card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid var(--border-subtle);
+  padding-top: 0.75rem;
+  margin-top: auto;
+}
+
+.due-date-info {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-weight: 500;
+
+  &.text-overdue {
+    color: var(--danger-solid);
+    font-weight: 600;
+  }
+}
+
+.card-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.action-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all var(--transition);
+  text-decoration: none;
+
+  &:hover {
+    background: var(--bg-subtle);
+    color: var(--text-primary);
+    border-color: var(--border-color);
+  }
+
+  &.edit-btn:hover {
+    color: var(--accent);
+  }
+
+  &.delete-btn:hover {
+    color: var(--danger-solid);
+    background: var(--danger-bg);
+    border-color: var(--danger-border);
+  }
+}

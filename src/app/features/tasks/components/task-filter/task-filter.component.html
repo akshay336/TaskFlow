@@ -1,0 +1,110 @@
+<div class="filter-panel" aria-label="Task Search and Filtering Controls">
+  <!-- Search Bar -->
+  <div class="search-box">
+    <div class="search-icon">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"></circle>
+        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+      </svg>
+    </div>
+    <input
+      type="text"
+      [formControl]="searchControl"
+      class="search-input"
+      placeholder="Search tasks by title..."
+      aria-label="Search tasks by title"
+      id="task-search-input" />
+    @if (searchControl.value) {
+      <button
+        type="button"
+        class="clear-search-btn"
+        (click)="clearSearch()"
+        aria-label="Clear search input"
+        id="clear-search-btn">
+        &times;
+      </button>
+    }
+  </div>
+
+  <!-- Filters & Sorting Group -->
+  <div class="filter-controls">
+    <!-- Status Filter -->
+    <div class="select-wrapper">
+      <label for="filter-status-select" class="visually-hidden">Filter by status</label>
+      <select
+        id="filter-status-select"
+        class="filter-select"
+        [value]="stateService.filter().status"
+        (change)="onStatusChange($event)">
+        @for (opt of statusOptions; track opt.value) {
+          <option [value]="opt.value">{{ opt.label }}</option>
+        }
+      </select>
+    </div>
+
+    <!-- Priority Filter -->
+    <div class="select-wrapper">
+      <label for="filter-priority-select" class="visually-hidden">Filter by priority</label>
+      <select
+        id="filter-priority-select"
+        class="filter-select"
+        [value]="stateService.filter().priority"
+        (change)="onPriorityChange($event)">
+        @for (opt of priorityOptions; track opt.value) {
+          <option [value]="opt.value">{{ opt.label }}</option>
+        }
+      </select>
+    </div>
+
+    <!-- Sort By Field -->
+    <div class="select-wrapper">
+      <label for="filter-sort-select" class="visually-hidden">Sort tasks by</label>
+      <select
+        id="filter-sort-select"
+        class="filter-select"
+        [value]="stateService.filter().sortBy"
+        (change)="onSortByChange($event)">
+        <option value="dueDate">Sort: Due Date</option>
+        <option value="priority">Sort: Priority</option>
+        <option value="title">Sort: Title</option>
+        <option value="status">Sort: Status</option>
+      </select>
+    </div>
+
+    <!-- Toggle Sort Order -->
+    <button
+      type="button"
+      class="btn btn-secondary btn-icon sort-dir-btn"
+      (click)="toggleSortOrder()"
+      [title]="'Sort: ' + (stateService.filter().sortOrder === 'asc' ? 'Ascending' : 'Descending')"
+      aria-label="Toggle sort order"
+      id="toggle-sort-order-btn">
+      @if (stateService.filter().sortOrder === 'asc') {
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="12" y1="19" x2="12" y2="5"></line>
+          <polyline points="5 12 12 5 19 12"></polyline>
+        </svg>
+      } @else {
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="12" y1="5" x2="12" y2="19"></line>
+          <polyline points="19 12 12 19 5 12"></polyline>
+        </svg>
+      }
+    </button>
+
+    <!-- Reset Filters Button (visible when filter is applied) -->
+    @if (stateService.filter().search || stateService.filter().status !== 'all' || stateService.filter().priority !== 'all') {
+      <button
+        type="button"
+        class="btn btn-ghost btn-sm reset-filter-btn"
+        (click)="resetAllFilters()"
+        id="reset-all-filters-btn">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="1 4 1 10 7 10"></polyline>
+          <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
+        </svg>
+        Reset
+      </button>
+    }
+  </div>
+</div>
